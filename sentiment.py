@@ -34,3 +34,16 @@ for domain in domains:
         except Exception as e:
             print(f"Error reading files in {domain} domain: {e}")
 
+
+# shuffle data
+combined_data = list(zip(reviews, labels))
+random.shuffle(combined_data)
+reviews, labels = zip(*combined_data)
+
+# 2) Tokenization to encode the words in reviews
+tokenizer = Tokenizer(num_words=10000, oov_token='<OOV>')
+tokenizer.fit_on_texts(reviews)
+
+# 5) applying pad sequences
+sequences= tokenizer.texts_to_sequences(reviews)
+padded_sequences = pad_sequences(sequences, maxlen=100, padding='post', truncating='post')
