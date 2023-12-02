@@ -1,3 +1,5 @@
+import numpy as np
+import tensorflow as tf
 import os
 import random
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -47,3 +49,8 @@ tokenizer.fit_on_texts(reviews)
 # 5) applying pad sequences
 sequences= tokenizer.texts_to_sequences(reviews)
 padded_sequences = pad_sequences(sequences, maxlen=100, padding='post', truncating='post')
+
+# 6) Split data into train and test sets
+train_size =int(0.8 * len(padded_sequences))
+train_reviews, test_reviews = padded_sequences[:train_size], padded_sequences[train_size:]
+train_labels, test_labels = np.array(labels[:train_size]), np.array(labels[train_size:])
