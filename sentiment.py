@@ -54,3 +54,22 @@ padded_sequences = pad_sequences(sequences, maxlen=100, padding='post', truncati
 train_size =int(0.8 * len(padded_sequences))
 train_reviews, test_reviews = padded_sequences[:train_size], padded_sequences[train_size:]
 train_labels, test_labels = np.array(labels[:train_size]), np.array(labels[train_size:])
+
+# Model building 8) Defining the training architecture
+model = tf.keras.Sequential([
+    tf.keras.layers.Embedding(input_dim=10000, output_dim=16, input_length=100),
+    tf.keras.layers.GlobalAveragePooling1D(),
+    tf.keras.layers.Dense(24, activation='relu'),
+    tf.keras.layers.Dense(1, activation='sigmoid')
+])
+
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+# 11) Training the model
+model.fit(train_reviews, train_labels, epochs=25, batch_size=64, validation_split=0.1)
+
+# 12) Model evaluation
+test_loss, test_accuracy = model.evaluate(test_reviews, test_labels)
+print(f'Test Accuracy: {test_accuracy}')
+
+model.save('sentiment_model.h5')
