@@ -87,7 +87,7 @@ def predict_sentiment(sentence):
 # 13) Developing web page through gradio
 def sentiment_analysis_interface(text):
     prediction = predict_sentiment(text)
-    return predictio
+    return prediction
 
 iface =gr.Interface(fn=sentiment_analysis_interface, inputs="text", outputs="text", title="Sentiment Analysis")
 iface.launch()
