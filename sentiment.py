@@ -73,3 +73,13 @@ test_loss, test_accuracy = model.evaluate(test_reviews, test_labels)
 print(f'Test Accuracy: {test_accuracy}')
 
 model.save('sentiment_model.h5')
+
+#loading the trained model
+loaded_model =tf.keras.models.load_model('sentiment_model.h5')
+
+# making predictions
+def predict_sentiment(sentence):
+    sequence = tokenizer.texts_to_sequences([sentence])
+    padded_sequence = pad_sequences(sequence, maxlen=100, padding='post', truncating='post')
+    prediction = model.predict(padded_sequence)
+    return "Positive review" if prediction >= 0.5 else "Negative review"
