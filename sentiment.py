@@ -83,3 +83,11 @@ def predict_sentiment(sentence):
     padded_sequence = pad_sequences(sequence, maxlen=100, padding='post', truncating='post')
     prediction = model.predict(padded_sequence)
     return "Positive review" if prediction >= 0.5 else "Negative review"
+
+# 13) Developing web page through gradio
+def sentiment_analysis_interface(text):
+    prediction = predict_sentiment(text)
+    return predictio
+
+iface =gr.Interface(fn=sentiment_analysis_interface, inputs="text", outputs="text", title="Sentiment Analysis")
+iface.launch()
